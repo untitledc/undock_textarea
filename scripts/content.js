@@ -46,12 +46,23 @@ function positionButton() {
 //click undock button
 function undockbuttonOnClick(e) {
     $(focusedTextarea).addClass("undocked");
+    // adjust position so it's no jumping to another place
+    var x = $(focusedTextarea).offset().left - window.pageXOffset;
+    var y = $(focusedTextarea).offset().top - window.pageYOffset;
+    console.log($(focusedTextarea).offset().top);
+    console.log(window.pageYOffset);
+    $(focusedTextarea).css("left", x+5);
+    $(focusedTextarea).css("top", y+5);
+
     useRevertButton();
     positionButton(); //when textarea is undocked, positions might change
 }
 //click revert button
 function revertbuttonOnClick(e) {
     $(focusedTextarea).removeClass("undocked");
+    // revert position set
+    $(focusedTextarea).css("left", "");
+    $(focusedTextarea).css("top", "");
     useUndockButton();
     positionButton(); //when textarea is undocked, positions might change
 }
