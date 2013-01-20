@@ -49,8 +49,6 @@ function undockbuttonOnClick(e) {
     // adjust position so it's no jumping to another place
     var x = $(focusedTextarea).offset().left - window.pageXOffset;
     var y = $(focusedTextarea).offset().top - window.pageYOffset;
-    console.log($(focusedTextarea).offset().top);
-    console.log(window.pageYOffset);
     $(focusedTextarea).css("left", x+5);
     $(focusedTextarea).css("top", y+5);
 
@@ -79,12 +77,6 @@ function useRevertButton() {
 }
 
 $(document).ready( function() {
-
-    // record original position of undocked textarea
-    $("textarea").each( function(){
-        $(this).data("origtop", $(this).offset().top);
-    });
-
     button.appendTo("html");
     button.click( function(e) {
         if ( button.hasClass("liftoff") ) { undockbuttonOnClick(e); }
