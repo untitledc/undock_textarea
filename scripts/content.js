@@ -19,7 +19,7 @@ function onMouseDown(e) {
 //d&d
 function onMouseMove(e) {
     if ( element ) {
-        button.remove(); //don't show button when dragging
+        button.hide(); //don't show button when dragging
         var x = elementX+(e.clientX-mouseStartX);
         var y = elementY+(e.clientY-mouseStartY);
         if ( $(element).css("position") == "fixed" ) {
@@ -71,13 +71,11 @@ function revertbuttonOnClick(e) {
 function useUndockButton() {
     button.addClass("liftoff");
     button.removeClass("revert");
-    button.click(undockbuttonOnClick);
 }
 //switch to revert button
 function useRevertButton() {
     button.addClass("revert");
     button.removeClass("liftoff");
-    button.click(revertbuttonOnClick);
 }
 
 $(document).ready( function() {
@@ -85,6 +83,12 @@ $(document).ready( function() {
     // record original position of undocked textarea
     $("textarea").each( function(){
         $(this).data("origtop", $(this).offset().top);
+    });
+
+    button.appendTo("html");
+    button.click( function(e) {
+        if ( button.hasClass("liftoff") ) { undockbuttonOnClick(e); }
+        else if ( button.hasClass("revert") ) { revertbuttonOnClick(e); }
     });
 
     var sb_timer; //timer to show button
@@ -105,7 +109,7 @@ $(document).ready( function() {
                 // liftoff: original -> undocked
                 useUndockButton();
             }
-            button.appendTo("html");
+            button.show();
             positionButton();
         }, 100);
     });
@@ -118,10 +122,9 @@ $(document).ready( function() {
         }
         // if button is already shown, remove in delay
         rb_timer = setTimeout( function() {
-            button.remove();
+            button.hide();
             focusedTextarea=null;
         }, 2500);
-        //button.remove();
     });
 
 
