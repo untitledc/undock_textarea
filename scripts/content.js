@@ -2,8 +2,6 @@ var mouseStartX, mouseStartY;
 var element, elementX, elementY;
 var button = $("<div class='dbutton'/>");
 var focusedTextarea=null;
-//var keyDownCode;
-//var CTRL_KEYCODE = 17;
 
 //d&d
 function onMouseDown(e) {
@@ -71,18 +69,6 @@ function useRevertButton() {
     button.click(revertbuttonOnClick);
 }
 
-//// when scroll, and make undocked textarea stay in viewport
-//function whenscroll(textarea){
-//    var origtop = textarea.data("origtop");
-//    textarea.toggleClass( "fixed", window.pageYOffset > origtop );
-//
-//    if ( textarea.hasClass("fixed") ) {
-//        textarea.css("left", textarea.data("origleft"));
-//    } else {
-//        textarea.css("left", "");
-//    }
-//}
-
 $(document).ready( function() {
 
     // record original position of undocked textarea
@@ -128,24 +114,8 @@ $(document).ready( function() {
     });
 
 
-    //$(window).resize( function() {
-    //    $("textarea").each( function(){
-    //        $(this).data("origleft", $(this).offset().left);
-    //    });
-    //}).trigger("resize");
-
-    //$(window).scroll( function() {
-    //    $("textarea").each( function(){whenscroll($(this))} );
-    //});
-
     $(window).mousedown(onMouseDown);
     $(window).mousemove(onMouseMove);
     $(window).mouseup(onMouseUp);
 
-//    $(window).keydown( function(e) {
-//        keyDownCode=e.keyCode;
-//    });
-//    $(window).keyup( function(e) {
-//        keyDownCode=null;
-//    });
 });
