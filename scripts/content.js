@@ -45,10 +45,10 @@ function positionButton() {
 
 //click undock button
 function undockbuttonOnClick(e) {
-    $(focusedTextarea).addClass("undocked");
     // adjust position so it's no jumping to another place
     var x = $(focusedTextarea).offset().left - window.pageXOffset;
     var y = $(focusedTextarea).offset().top - window.pageYOffset;
+    $(focusedTextarea).addClass("undocked");
     $(focusedTextarea).css("left", x+5);
     $(focusedTextarea).css("top", y+5);
 
