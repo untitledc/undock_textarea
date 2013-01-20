@@ -1,6 +1,6 @@
 var mouseStartX, mouseStartY;
 var element, elementX, elementY;
-var button = $("<div type='button' class='dbutton'>undock</div>");
+var button = $("<div class='dbutton'/>");
 var focusedTextarea=null;
 //var keyDownCode;
 //var CTRL_KEYCODE = 17;
@@ -41,15 +41,34 @@ function onMouseUp() {
 function positionButton() {
     button.offset(
         {"left":$(focusedTextarea).offset().left,
-         "top":$(focusedTextarea).offset().top-17}
+         "top":$(focusedTextarea).offset().top-33}
     );
 }
 
-//undock button
+//click undock button
 function undockbuttonOnClick(e) {
-    console.log("undocking");
     $(focusedTextarea).addClass("undocked");
+    useRevertButton();
     positionButton(); //when textarea is undocked, positions might change
+}
+//click revert button
+function revertbuttonOnClick(e) {
+    $(focusedTextarea).removeClass("undocked");
+    useUndockButton();
+    positionButton(); //when textarea is undocked, positions might change
+}
+
+//switch to undock button
+function useUndockButton() {
+    button.addClass("liftoff");
+    button.removeClass("revert");
+    button.click(undockbuttonOnClick);
+}
+//switch to revert button
+function useRevertButton() {
+    button.addClass("revert");
+    button.removeClass("liftoff");
+    button.click(revertbuttonOnClick);
 }
 
 //// when scroll, and make undocked textarea stay in viewport
@@ -81,10 +100,16 @@ $(document).ready( function() {
             rb_timer = null;
         }
         sb_timer = setTimeout( function() {
-            button.appendTo("html");
             focusedTextarea=e.target;
+            if ( $(focusedTextarea).hasClass("undocked") ) {
+                // revert: undocked -> original
+                useRevertButton();
+            } else {
+                // liftoff: original -> undocked
+                useUndockButton();
+            }
+            button.appendTo("html");
             positionButton();
-            button.click(undockbuttonOnClick);
         }, 100);
     });
     // leaving textarea, mainly to achieve delay&cancel of textarea hovering
@@ -98,7 +123,7 @@ $(document).ready( function() {
         rb_timer = setTimeout( function() {
             button.remove();
             focusedTextarea=null;
-        }, 3000);
+        }, 2500);
         //button.remove();
     });
 
