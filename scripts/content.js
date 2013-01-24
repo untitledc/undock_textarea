@@ -19,7 +19,7 @@ function onMouseDown(e) {
 //d&d
 function onMouseMove(e) {
     if ( element ) {
-        button.hide(); //don't show button when dragging
+        //button.hide(); //don't show button when dragging
         var x = elementX+(e.clientX-mouseStartX);
         var y = elementY+(e.clientY-mouseStartY);
         if ( $(element).css("position") == "fixed" ) {
@@ -28,6 +28,7 @@ function onMouseMove(e) {
         } 
         $(element).css("left", x);
         $(element).css("top", y);
+        positionButton(); //is it a good idea? :p
     }
 }
 
@@ -36,11 +37,19 @@ function onMouseUp() {
     element = null;
 }
 
+//if button is fixed but textarea is not, scrolling looks funny
+function onScroll() {
+    if ( ! $(focusedTextarea).hasClass("undocked") ) {
+        positionButton(); //is it a good idea? :p
+    }
+}
+
+// reposition the button
 function positionButton() {
-    button.offset(
-        {"left":$(focusedTextarea).offset().left,
-         "top":$(focusedTextarea).offset().top-33}
-    );
+    var x = $(focusedTextarea).offset().left - window.pageXOffset;
+    var y = $(focusedTextarea).offset().top - window.pageYOffset;
+    $(button).css("left", x);
+    $(button).css("top", y-33);
 }
 
 //click undock button
@@ -116,12 +125,13 @@ $(document).ready( function() {
         rb_timer = setTimeout( function() {
             button.hide();
             focusedTextarea=null;
-        }, 2500);
+        }, 2000);
     });
 
 
     $(window).mousedown(onMouseDown);
     $(window).mousemove(onMouseMove);
     $(window).mouseup(onMouseUp);
+    $(window).scroll(onScroll);
 
 });
