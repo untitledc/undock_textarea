@@ -5,9 +5,9 @@
 
     "description": "Lift off the textarea.  Make it movable and always stay in the view",
     "icons": {
-        "16": "resources/images/icon16.ico",
-        "48": "resources/images/icon48.ico",
-        "128": "resources/images/icon128.ico"
+        "16": "resources/images/icon16.png",
+        "48": "resources/images/icon48.png",
+        "128": "resources/images/icon128.png"
     },
 
     "content_scripts": [
